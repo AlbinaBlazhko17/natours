@@ -3,7 +3,9 @@ import fs from 'fs';
 
 const app = express();
 
-const tours = JSON.parse(fs.readFileSync('./dev-data/data/tours.json'));
+app.use(express.json());
+
+let tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 
 app.get('/api/v1/tours', (req, res) => {
 	if (tours)
@@ -12,6 +14,24 @@ app.get('/api/v1/tours', (req, res) => {
 			results: tours.length,
 			data: { tours },
 		});
+});
+
+app.post('/api/v1/tours', (req, res) => {
+	const newId = tours[tours.length - 1].id + 1;
+	const newTour = { id: newId, ...req.body };
+	tours = [...tours, newTour];
+	fs.writeFile(
+		'./dev-data/data/tours-simple.json',
+		JSON.stringify(tours),
+		(err) => {
+			if (err) res.send(400).json(`Error!!! ${err.message} ${err.code}`);
+			else
+				res.status(201).json({
+					status: 'success',
+					data: { tour: newTour },
+				});
+		}
+	);
 });
 
 const port = 3000;
