@@ -7,25 +7,25 @@ app.use(express.json());
 
 let tours = JSON.parse(fs.readFileSync('./dev-data/data/tours-simple.json'));
 
-app.get('/api/v1/tours', (req, res) => {
+const getAllTours = (req, res) => {
 	if (tours)
 		res.status(200).json({
 			status: 'success',
 			results: tours.length,
 			data: { tours },
 		});
-});
+};
 
-app.get('/api/v1/tours/:id', (req, res) => {
+const getTour = (req, res) => {
 	const id = +req.params.id;
 	const tour = tours.find((el) => el.id === id);
 	if (tour && id < tours.length - 1 && id > 0) {
 		res.status(200).json({ status: 'success', data: { tour } });
 	} else
 		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
-});
+};
 
-app.post('/api/v1/tours', (req, res) => {
+const createTour = (req, res) => {
 	const newId = tours[tours.length - 1].id + 1;
 	const newTour = { id: newId, ...req.body };
 	tours = [...tours, newTour];
@@ -33,20 +33,21 @@ app.post('/api/v1/tours', (req, res) => {
 		'./dev-data/data/tours-simple.json',
 		JSON.stringify(tours),
 		(err) => {
-			if (err)
+			if (err) {
 				return res
 					.send(400)
 					.json(`Cannot POST: ${err.message} ${err.code}`);
-			else
+			} else {
 				res.status(201).json({
 					status: 'success',
 					data: { tour: newTour },
 				});
+			}
 		}
 	);
-});
+};
 
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
 	const id = +req.params.id;
 	if (id < tours.length) {
 		res.status(200).json({
@@ -55,7 +56,23 @@ app.patch('/api/v1/tours/:id', (req, res) => {
 		});
 	} else
 		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
-});
+};
+
+const deleteTour = (req, res) => {
+	if (id < tours.length) {
+		res.status(204).json({
+			status: 'success',
+			data: null,
+		});
+	} else
+		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+};
+
+app.route('/api/v1/tours').get(getAllTours).post(createTour);
+app.route('/api/v1/tours/:id')
+	.get(getTour)
+	.patch(updateTour)
+	.delete(deleteTour);
 
 const port = 3000;
 app.listen(port, () => {
