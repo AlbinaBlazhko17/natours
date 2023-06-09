@@ -21,7 +21,8 @@ app.get('/api/v1/tours/:id', (req, res) => {
 	const tour = tours.find((el) => el.id === id);
 	if (tour && id < tours.length - 1 && id > 0) {
 		res.status(200).json({ status: 'success', data: { tour } });
-	} else res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+	} else
+		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
 });
 
 app.post('/api/v1/tours', (req, res) => {
@@ -32,7 +33,10 @@ app.post('/api/v1/tours', (req, res) => {
 		'./dev-data/data/tours-simple.json',
 		JSON.stringify(tours),
 		(err) => {
-			if (err) res.send(400).json(`Error!!! ${err.message} ${err.code}`);
+			if (err)
+				return res
+					.send(400)
+					.json(`Cannot POST: ${err.message} ${err.code}`);
 			else
 				res.status(201).json({
 					status: 'success',
@@ -43,10 +47,14 @@ app.post('/api/v1/tours', (req, res) => {
 });
 
 app.patch('/api/v1/tours/:id', (req, res) => {
-	res.status(200).json({
-		status: 'success',
-		data: { tour: 'Updated tour here' },
-	});
+	const id = +req.params.id;
+	if (id < tours.length) {
+		res.status(200).json({
+			status: 'success',
+			data: { tour: 'Updated tour here' },
+		});
+	} else
+		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
 });
 
 const port = 3000;
