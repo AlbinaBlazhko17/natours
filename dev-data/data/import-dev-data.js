@@ -22,6 +22,8 @@ const tours = JSON.parse(
 const importData = async () => {
 	try {
 		await Tour.create(tours);
+		console.log('Data imported successfuly');
+		process.exit();
 	} catch (err) {
 		console.log(err);
 	}
@@ -30,6 +32,8 @@ const importData = async () => {
 const deleteData = async () => {
 	try {
 		await Tour.deteMany();
+		console.log('Data deleted successfuly');
+		process.exit();
 	} catch (err) {
 		console.log(err);
 	}
