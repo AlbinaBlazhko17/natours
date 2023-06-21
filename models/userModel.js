@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import isEmail from 'validator/lib/isEmail';
-import isStrongPassword from 'validator/lib/isStrongPassword';
+import isEmail from 'validator/lib/isEmail.js';
+import isStrongPassword from 'validator/lib/isStrongPassword.js';
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -11,13 +11,13 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'User must have an email'],
 		lowercase: true,
-		validate: [isEmail(val), 'Incorrect email'],
+		validate: [isEmail, 'Incorrect email'],
 	},
 	photo: String,
 	password: {
 		type: String,
 		required: [true, 'User must have a password'],
-		validate: [isStrongPassword(val), 'Password must be stronger'],
+		validate: [isStrongPassword, 'Password must be stronger'],
 	},
 	passwordConfirm: {
 		type: String,
