@@ -1,5 +1,12 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+process.on('uncaughtException', (err) => {
+	console.log('UNCAUGHT REJECTION!💥 Shutting down...');
+	console.log(err.name, err.message);
+	process.exit(1);
+});
+
 import app from './app.js';
 dotenv.config();
 
