@@ -1,8 +1,8 @@
 import express from 'express';
+import globalErrorHandler from './controller/errorController.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import AppError from './utils/appError.js';
-import globalErrorHandler from './controller/errorController.js';
 
 const app = express();
 

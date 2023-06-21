@@ -8,7 +8,7 @@ import {
 	aliasTopTours,
 	getTourStats,
 	getMonthlyPlan,
-} from '../controller/tours.controller.js';
+} from '../controller/toursController.js';
 
 const tourRouter = express.Router();
 

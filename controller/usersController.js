@@ -16,8 +16,7 @@ export const getUser = (req, res) => {
 	const user = users.find((el) => el.id === id);
 	if (user && id < users.length - 1 && id > 0) {
 		res.status(200).json({ status: 'success', data: { user } });
-	} else
-		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+	} else return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
 };
 
 export const createUser = (req, res) => {
@@ -26,9 +25,7 @@ export const createUser = (req, res) => {
 	users = [...users, newuser];
 	fs.writeFile('./dev-data/data/users.json', JSON.stringify(users), (err) => {
 		if (err) {
-			return res
-				.send(400)
-				.json(`Cannot POST: ${err.message} ${err.code}`);
+			return res.send(400).json(`Cannot POST: ${err.message} ${err.code}`);
 		} else {
 			res.status(201).json({
 				status: 'success',
@@ -45,8 +42,7 @@ export const updateUser = (req, res) => {
 			status: 'success',
 			data: { user: 'Updated user here' },
 		});
-	} else
-		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+	} else return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
 };
 
 export const deleteUser = (req, res) => {
@@ -55,6 +51,5 @@ export const deleteUser = (req, res) => {
 			status: 'success',
 			data: null,
 		});
-	} else
-		return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
+	} else return res.status(404).json({ status: 'fail', message: 'Invalid ID' });
 };
