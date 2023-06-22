@@ -9,11 +9,12 @@ import {
 	getTourStats,
 	getMonthlyPlan,
 } from '../controller/toursController.js';
+import { protect } from '../controller/authController.js';
 
 const tourRouter = express.Router();
 
 tourRouter.route('/top-5-cheap').get(aliasTopTours, getAllTours);
-tourRouter.route('/tour-stats').get(getTourStats);
+tourRouter.route('/tour-stats').get(protect, getTourStats);
 tourRouter.route('/monthly-plan/:year').get(getMonthlyPlan);
 
 tourRouter.route('/').get(getAllTours).post(createTour);
