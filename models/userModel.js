@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: [true, 'User must have a password'],
 		validate: [isStrongPassword, 'Password must be stronger'],
+		select: false,
 	},
 	passwordConfirm: {
 		type: String,
@@ -40,6 +41,10 @@ userSchema.pre('save', async function (next) {
 	this.passwordConfirm = undefined;
 	next();
 });
+
+userSchema.methods.correctPassword = function (candidatePassword, userPassword) {
+	return bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 
