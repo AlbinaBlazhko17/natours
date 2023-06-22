@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import isEmail from 'validator/lib/isEmail.js';
 import isStrongPassword from 'validator/lib/isStrongPassword.js';
+import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -12,6 +13,7 @@ const userSchema = new mongoose.Schema({
 		required: [true, 'User must have an email'],
 		lowercase: true,
 		validate: [isEmail, 'Incorrect email'],
+		unique: true,
 	},
 	photo: String,
 	password: {
@@ -22,7 +24,21 @@ const userSchema = new mongoose.Schema({
 	passwordConfirm: {
 		type: String,
 		required: [true, 'Please confirm your password'],
+		validate: {
+			validator: function (el) {
+				return el === this.password;
+			},
+			message: 'Password aare not the same',
+		},
 	},
+});
+
+userSchema.pre('save', async function (next) {
+	if (!this.isModified('password')) return next();
+	this.password = await bcrypt.hash(this.password, 12);
+
+	this.passwordConfirm = undefined;
+	next();
 });
 
 const User = mongoose.model('User', userSchema);
