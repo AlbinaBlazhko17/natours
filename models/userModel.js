@@ -48,11 +48,11 @@ userSchema.methods.correctPassword = function (candidatePassword, userPassword) 
 };
 
 userSchema.methods.changePasswordAfter = function (JWTTimestamp) {
+	let changedTimestamp;
 	if (this.passwordChangedAt) {
-		const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
-		return JWTTimestamp < changedTimestamp;
+		changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
 	}
-	return false;
+	return JWTTimestamp < changedTimestamp;
 };
 
 const User = mongoose.model('User', userSchema);
