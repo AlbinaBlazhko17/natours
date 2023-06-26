@@ -12,6 +12,18 @@ const signToken = (id) => {
 	});
 };
 
+const createSendToken = (user, statusCode, res) => {
+	const token = signToken(user._id);
+
+	res.status(201).json({
+		status: 'success',
+		token,
+		data: {
+			user,
+		},
+	});
+};
+
 export const signUp = catchAsync(async (req, res, next) => {
 	const newUser = await User.create({
 		name: req.body.name,
@@ -21,15 +33,7 @@ export const signUp = catchAsync(async (req, res, next) => {
 		changePasswordAfter: req.body.changePasswordAfter,
 	});
 
-	const token = signToken(newUser._id);
-
-	res.status(201).json({
-		status: 'success',
-		token,
-		data: {
-			user: newUser,
-		},
-	});
+	createSendToken(newUser, 201, res);
 });
 
 export const login = catchAsync(async (req, res, next) => {
@@ -41,12 +45,7 @@ export const login = catchAsync(async (req, res, next) => {
 		return next(new AppError('Incorrect email or password', 401));
 
 	if (email && password) {
-		const token = signToken(user._id);
-
-		res.status(200).json({
-			status: 'success',
-			token,
-		});
+		createSendToken(user, 200, res);
 	} else {
 		return next(new AppError('Please provide email and password!', 400));
 	}
@@ -124,7 +123,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 		passwordResetExpires: { $gt: Date.now() },
 	});
 
-	if (!user) return next(new Error('Token is invalid or has expired', 400));
+	if (!user) return next(new AppError('Token is invalid or has expired', 400));
 
 	user.password = req.body.password;
 	user.passwordConfirm = req.body.passwordConfirm;
@@ -133,10 +132,19 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
 	await user.save();
 
-	const token = signToken(user._id);
+	createSendToken(user, 200, res);
+});
 
-	res.status(200).json({
-		status: 'success',
-		token,
-	});
+export const updatePassword = catchAsync(async (req, res, next) => {
+	const user = await User.findById(req.user.id).select('+password');
+
+	if (await !user.correctPassword(req.body.passwordCurrent, user.password))
+		return next(new AppError('Password in incorrect', 401));
+
+	user.password = req.body.password;
+	user.passwordConfirm = req.body.passwordConfirm;
+
+	await user.save();
+
+	createSendToken(user, 200, res);
 });
