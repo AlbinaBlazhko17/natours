@@ -7,7 +7,7 @@ import {
 	protect,
 	updatePassword,
 } from '../controller/authController.js';
-import { getAllUsers } from '../controller/userController.js';
+import { getAllUsers, updateMe } from '../controller/userController.js';
 
 const userRouter = express.Router();
 
@@ -18,6 +18,7 @@ userRouter.post('/forgotPassword', forgotPassword);
 
 userRouter.patch('/resetPassword/:token', resetPassword);
 userRouter.patch('/updateMyPassword', protect, updatePassword);
+userRouter.patch('/updateMe', protect, updateMe);
 userRouter.route('/').get(getAllUsers);
 
 export default userRouter;
