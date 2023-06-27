@@ -1,12 +1,15 @@
 import express from 'express';
+import { rateLimit } from 'express-rate-limit';
+import helmet from 'helmet';
 import morgan from 'morgan';
 import globalErrorHandler from './controller/errorController.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import { AppError } from './utils/appError.js';
-import { rateLimit } from 'express-rate-limit';
 
 const app = express();
+
+app.use(helmet());
 
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
@@ -18,9 +21,13 @@ const limiter = rateLimit({
 	message: 'Too many request from this API, please try again in an hour!',
 });
 
-app.user('/api', limiter);
+app.use('/api', limiter);
 
-app.use(express.json());
+app.use(
+	express.json({
+		limit: '10kb',
+	})
+);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
