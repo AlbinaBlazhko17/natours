@@ -6,6 +6,8 @@ import globalErrorHandler from './controller/errorController.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import { AppError } from './utils/appError.js';
+import ExpressMongoSanitize from 'express-mongo-sanitize';
+import xss from 'xss-clean';
 
 const app = express();
 
@@ -28,6 +30,9 @@ app.use(
 		limit: '10kb',
 	})
 );
+app.use(ExpressMongoSanitize());
+app.use(xss());
+
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
