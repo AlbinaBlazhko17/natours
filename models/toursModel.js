@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import slugify from 'slugify';
+import User from './userModel.js';
 
 const tourSchema = new mongoose.Schema(
 	{
@@ -92,6 +94,12 @@ const tourSchema = new mongoose.Schema(
 				day: Number,
 			},
 		],
+		guides: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+			},
+		],
 	},
 	{
 		toJSON: { virtuals: true },
@@ -101,6 +109,11 @@ const tourSchema = new mongoose.Schema(
 
 tourSchema.virtual('durationWeeks').get(function () {
 	return this.duration / 7;
+});
+
+tourSchema.pre('save', function (next) {
+	this.slug = slugify(this.name, { lower: true });
+	next();
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
