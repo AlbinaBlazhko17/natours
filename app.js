@@ -1,13 +1,14 @@
 import express from 'express';
+import ExpressMongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
+import hpp from 'hpp';
 import morgan from 'morgan';
+import xss from 'xss-clean';
 import globalErrorHandler from './controller/errorController.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import { AppError } from './utils/appError.js';
-import ExpressMongoSanitize from 'express-mongo-sanitize';
-import xss from 'xss-clean';
 
 const app = express();
 
@@ -32,6 +33,19 @@ app.use(
 );
 app.use(ExpressMongoSanitize());
 app.use(xss());
+
+app.use(
+	hpp({
+		whitelist: [
+			'duration',
+			'ratingsQuantity',
+			'ratingsAverage',
+			'maxGroupSize',
+			'difficulty',
+			'price',
+		],
+	})
+);
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
