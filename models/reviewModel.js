@@ -6,7 +6,7 @@ const reviewSchema = new mongoose.Schema(
 			type: String,
 			required: [true, 'Review can not be empty'],
 			minLength: [10, 'Review must have more or equal then 10 characters'],
-			maxLength: [60, 'Review must have less or more then 60 characters'],
+			maxLength: [200, 'Review must have less or more then 200 characters'],
 		},
 		rating: {
 			type: Number,
@@ -34,6 +34,14 @@ const reviewSchema = new mongoose.Schema(
 		toObject: { virtuals: true },
 	}
 );
+
+reviewSchema.pre(/^find/, function (next) {
+	this.populate({
+		path: 'user',
+		select: '-__v -passwordChangedAt',
+	});
+	next();
+});
 
 const Review = mongoose.model('Review', reviewSchema);
 
