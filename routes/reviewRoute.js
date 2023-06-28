@@ -2,7 +2,9 @@ import express from 'express';
 import { getAllReviews, createReview } from '../controller/reviewController.js';
 import { protect, restrictTo } from '../controller/authController.js';
 
-const reviewRouter = express.Router();
+const reviewRouter = express.Router({
+	mergeParams: true,
+});
 
 reviewRouter.route('/').get(getAllReviews).post(protect, restrictTo('user'), createReview);
 
