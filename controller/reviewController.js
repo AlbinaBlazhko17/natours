@@ -1,20 +1,14 @@
 import Review from '../models/reviewModel.js';
 import catchAsync from '../utils/catchAsync.js';
-import { deleteOne, updateOne } from './handlerFactory.js';
+import { createOne, deleteOne, updateOne } from './handlerFactory.js';
 
-export const createReview = catchAsync(async (req, res, next) => {
+export const setTourUserIds = (req, res, next) => {
 	if (!req.body.tour) req.body.tour = req.params.tourId;
 	req.body.user = req.user.id;
-	const newReview = await Review.create(req.body);
+	next();
+};
 
-	res.status(201).json({
-		status: 'success',
-		data: {
-			review: newReview,
-		},
-	});
-});
-
+export const createReview = createOne(Review);
 export const updateReview = updateOne(Review);
 
 export const getAllReviews = catchAsync(async (req, res, next) => {

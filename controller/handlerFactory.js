@@ -32,3 +32,13 @@ export const updateOne = (Model) =>
 			data: { updatedModel },
 		});
 	});
+
+export const createOne = (Model) =>
+	catchAsync(async (req, res, next) => {
+		const newModel = await Model.create(req.body);
+
+		res.status(201).json({
+			status: 'success',
+			data: { data: newModel },
+		});
+	});
