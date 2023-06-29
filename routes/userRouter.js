@@ -12,6 +12,7 @@ import {
 	deleteMe,
 	deleteUser,
 	getAllUsers,
+	getMe,
 	getUser,
 	updateMe,
 	updateUser,
@@ -32,7 +33,9 @@ userRouter
 userRouter.post('/forgotPassword', forgotPassword);
 userRouter.patch('/resetPassword/:token', resetPassword);
 userRouter.patch('/updateMyPassword', protect, updatePassword);
-userRouter.patch('/updateMe', protect, updateMe);
+
+userRouter.get('/me', protect, getMe);
+userRouter.patch('/updateMe', protect, updateMe, getUser);
 userRouter.delete('/deleteMe', protect, deleteMe);
 
 export default userRouter;

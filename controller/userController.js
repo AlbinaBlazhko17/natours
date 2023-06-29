@@ -16,6 +16,11 @@ export const updateUser = updateOne(User);
 export const deleteUser = deleteOne(User);
 export const getUser = getOne(User);
 
+export const getMe = (req, res, next) => {
+	req.paramas.id = req.user.id;
+	next();
+};
+
 export const updateMe = catchAsync(async (req, res, next) => {
 	if (req.body.password || req.body.confirmPassword)
 		return next(
