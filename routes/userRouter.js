@@ -8,7 +8,7 @@ import {
 	updatePassword,
 	restrictTo,
 } from '../controller/authController.js';
-import { deleteMe, getAllUsers, updateMe } from '../controller/userController.js';
+import { deleteMe, deleteUser, getAllUsers, updateMe } from '../controller/userController.js';
 
 const userRouter = express.Router();
 
@@ -16,6 +16,7 @@ userRouter.route('/').get(getAllUsers);
 
 userRouter.post('/signup', signUp);
 userRouter.post('/login', login);
+userRouter.route('/:id', protect, restrictTo('admin'), deleteUser);
 
 userRouter.post('/forgotPassword', forgotPassword);
 
