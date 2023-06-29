@@ -1,7 +1,7 @@
 import User from '../models/userModel.js';
 import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
-import { deleteOne } from './handlerFactory.js';
+import { deleteOne, updateOne } from './handlerFactory.js';
 
 const filteredObj = (obj, ...allowedFildes) => {
 	const newObj = {};
@@ -22,6 +22,8 @@ export const getAllUsers = catchAsync(async (req, res, next) => {
 		},
 	});
 });
+
+export const updateUser = updateOne(User);
 
 export const deleteUser = deleteOne(User);
 

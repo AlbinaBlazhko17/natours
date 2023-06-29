@@ -15,11 +15,20 @@ export const deleteOne = (Model) =>
 		});
 	});
 
-export const deleteTour = catchAsync(async (req, res, next) => {
-	const tour = await Tour.findByIdAndDelete(req.params.id);
-	if (!tour) return next(new AppError('No tour found with that ID', 404));
-	res.status(204).json({
-		status: 'success',
-		data: null,
+export const updateOne = (Model) =>
+	catchAsync(async (req, res, next) => {
+		const updatedModel = await Model.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true,
+		});
+
+		if (!updatedModel)
+			return next(
+				new AppError(`No ${Model.modelName.toLowerCase()} found with that id`, 404)
+			);
+
+		res.status(200).json({
+			status: 'success',
+			data: { updatedModel },
+		});
 	});
-});

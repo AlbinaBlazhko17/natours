@@ -2,7 +2,7 @@ import Tour from '../models/toursModel.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
-import { deleteOne } from './handlerFactory.js';
+import { deleteOne, updateOne } from './handlerFactory.js';
 
 export const aliasTopTours = (req, res, next) => {
 	req.query.limit = '5';
@@ -36,16 +36,7 @@ export const getTour = catchAsync(async (req, res, next) => {
 	res.status(200).json({ status: 'success', data: { tour } });
 });
 
-export const updateTour = catchAsync(async (req, res, next) => {
-	const updatedTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
-		new: true,
-		runValidators: true,
-	});
-	res.status(200).json({
-		status: 'success',
-		data: { updatedTour },
-	});
-});
+export const updateTour = updateOne(Tour);
 
 export const deleteTour = deleteOne(Tour);
 
