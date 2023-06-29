@@ -20,22 +20,22 @@ import {
 
 const userRouter = express.Router();
 
-userRouter.route('/').get(getAllUsers);
-
 userRouter.post('/signup', signUp);
 userRouter.post('/login', login);
-userRouter
-	.route('/:id')
-	.delete(protect, restrictTo('admin'), deleteUser)
-	.patch(protect, updateUser)
-	.get(protect, getUser);
+
+userRouter.use(protect);
 
 userRouter.post('/forgotPassword', forgotPassword);
 userRouter.patch('/resetPassword/:token', resetPassword);
-userRouter.patch('/updateMyPassword', protect, updatePassword);
+userRouter.patch('/updateMyPassword', updatePassword);
 
-userRouter.get('/me', protect, getMe);
-userRouter.patch('/updateMe', protect, updateMe, getUser);
-userRouter.delete('/deleteMe', protect, deleteMe);
+userRouter.get('/me', getMe);
+userRouter.patch('/updateMe', updateMe, getUser);
+userRouter.delete('/deleteMe', deleteMe);
+
+userRouter.use(restrictTo('admin'));
+
+userRouter.route('/').get(getAllUsers);
+userRouter.route('/:id').delete(deleteUser).patch(updateUser).get(getUser);
 
 export default userRouter;

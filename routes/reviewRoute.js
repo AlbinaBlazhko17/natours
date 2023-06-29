@@ -13,15 +13,14 @@ const reviewRouter = express.Router({
 	mergeParams: true,
 });
 
-reviewRouter
-	.route('/')
-	.get(getAllReviews)
-	.post(protect, restrictTo('user'), setTourUserIds, createReview);
+reviewRouter.use(protect);
+
+reviewRouter.route('/').get(getAllReviews).post(restrictTo('user'), setTourUserIds, createReview);
 
 reviewRouter
 	.route('/:id')
-	.delete(protect, restrictTo('admin'), deleteReview)
-	.patch(protect, updateReview)
+	.delete(restrictTo('admin', 'user'), deleteReview)
+	.patch(restrictTo('admin', 'user'), updateReview)
 	.get(getReview);
 
 export default reviewRouter;

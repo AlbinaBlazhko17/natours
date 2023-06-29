@@ -14,7 +14,10 @@ import reviewRouter from './reviewRoute.js';
 
 const tourRouter = express.Router();
 
-tourRouter.route('/').get(getAllTours).post(createTour);
+tourRouter
+	.route('/')
+	.get(getAllTours)
+	.post(protect, restrictTo('admin', 'leaad-guide'), createTour);
 
 tourRouter.use('/:tourId/reviews', reviewRouter);
 
@@ -25,7 +28,7 @@ tourRouter.route('/monthly-plan/:year').get(getMonthlyPlan);
 tourRouter
 	.route('/:id')
 	.get(getTour)
-	.patch(updateTour)
+	.patch(protect, restrictTo('admin', 'leaad-guide'), updateTour)
 	.delete(protect, restrictTo('admin', 'lead-guide'), deleteTour);
 
 export default tourRouter;
