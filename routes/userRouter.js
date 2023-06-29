@@ -1,17 +1,18 @@
 import express from 'express';
 import {
-	signUp,
-	login,
 	forgotPassword,
-	resetPassword,
+	login,
 	protect,
-	updatePassword,
+	resetPassword,
 	restrictTo,
+	signUp,
+	updatePassword,
 } from '../controller/authController.js';
 import {
 	deleteMe,
 	deleteUser,
 	getAllUsers,
+	getUser,
 	updateMe,
 	updateUser,
 } from '../controller/userController.js';
@@ -25,7 +26,8 @@ userRouter.post('/login', login);
 userRouter
 	.route('/:id')
 	.delete(protect, restrictTo('admin'), deleteUser)
-	.patch(protect, updateUser);
+	.patch(protect, updateUser)
+	.get(protect, getUser);
 
 userRouter.post('/forgotPassword', forgotPassword);
 userRouter.patch('/resetPassword/:token', resetPassword);

@@ -1,8 +1,6 @@
 import Tour from '../models/toursModel.js';
-import APIFeatures from '../utils/apiFeatures.js';
-import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
-import { createOne, deleteOne, updateOne } from './handlerFactory.js';
+import { createOne, deleteOne, getAll, getOne, updateOne } from './handlerFactory.js';
 
 export const aliasTopTours = (req, res, next) => {
 	req.query.limit = '5';
@@ -12,26 +10,9 @@ export const aliasTopTours = (req, res, next) => {
 };
 
 export const createTour = createOne(Tour);
-
-export const getAllTours = catchAsync(async (req, res, next) => {
-	const features = new APIFeatures(Tour.find(), req.query).filter().sort().limit().paginate();
-	const allTours = await features.query;
-
-	res.status(200).json({
-		status: 'success',
-		results: allTours.length,
-		data: { allTours },
-	});
-});
-
-export const getTour = catchAsync(async (req, res, next) => {
-	const tour = await Tour.findById(req.params.id).populate('reviews');
-	if (!tour) return next(new AppError('No tour found with that ID', 404));
-	res.status(200).json({ status: 'success', data: { tour } });
-});
-
+export const getAllTours = getAll(Tour);
+export const getTour = getOne(Tour, { path: 'reviews' });
 export const updateTour = updateOne(Tour);
-
 export const deleteTour = deleteOne(Tour);
 
 export const getTourStats = catchAsync(async (req, res, next) => {

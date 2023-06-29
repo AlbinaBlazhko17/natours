@@ -5,6 +5,7 @@ import {
 	deleteReview,
 	updateReview,
 	setTourUserIds,
+	getReview,
 } from '../controller/reviewController.js';
 import { protect, restrictTo } from '../controller/authController.js';
 
@@ -20,6 +21,7 @@ reviewRouter
 reviewRouter
 	.route('/:id')
 	.delete(protect, restrictTo('admin'), deleteReview)
-	.patch(protect, updateReview);
+	.patch(protect, updateReview)
+	.get(getReview);
 
 export default reviewRouter;
