@@ -9,6 +9,7 @@ import {
 	getTourStats,
 	getMonthlyPlan,
 	getTourWithin,
+	getDistances,
 } from '../controller/toursController.js';
 import { protect, restrictTo } from '../controller/authController.js';
 import reviewRouter from './reviewRoute.js';
@@ -27,6 +28,7 @@ tourRouter.route('/tour-stats').get(protect, getTourStats);
 tourRouter.route('/monthly-plan/:year').get(getMonthlyPlan);
 
 tourRouter.route('/tours-within/:distance/center/:latlng/unit/:unit').get(getTourWithin);
+tourRouter.route('/distances/:latlng/unit/:unit').get(getDistances);
 
 tourRouter
 	.route('/:id')
