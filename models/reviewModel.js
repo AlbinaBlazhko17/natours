@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Tour from './toursModel.js';
 
 const reviewSchema = new mongoose.Schema(
 	{
@@ -35,6 +36,29 @@ const reviewSchema = new mongoose.Schema(
 		toObject: { virtuals: true },
 	}
 );
+
+reviewSchema.statics.calcAverageRatings = async function (tour) {
+	const rating = await this.aggregate([
+		{
+			$match: { tour: tourId },
+		},
+		{
+			$group: {
+				_id: '$tour',
+				nRating: { $sum: 1 },
+				avgRating: { $avg: '$rating' },
+			},
+		},
+	]);
+	await Tour.findByIdAndUpdate(tourId, {
+		ratingsQuantity: rating[0].nRating,
+		ratingsAverage: rating[0].avgRating,
+	});
+};
+
+reviewSchema.post('save', function () {
+	this.constructor.calcAverageRatings(this.tour);
+});
 
 const Review = mongoose.model('Review', reviewSchema);
 
