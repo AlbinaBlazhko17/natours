@@ -8,6 +8,7 @@ import {
 	aliasTopTours,
 	getTourStats,
 	getMonthlyPlan,
+	getTourWithin,
 } from '../controller/toursController.js';
 import { protect, restrictTo } from '../controller/authController.js';
 import reviewRouter from './reviewRoute.js';
@@ -24,6 +25,8 @@ tourRouter.use('/:tourId/reviews', reviewRouter);
 tourRouter.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 tourRouter.route('/tour-stats').get(protect, getTourStats);
 tourRouter.route('/monthly-plan/:year').get(getMonthlyPlan);
+
+tourRouter.route('/tours-within/:distance/center/:latlng/unit/:unit').get(getTourWithin);
 
 tourRouter
 	.route('/:id')
