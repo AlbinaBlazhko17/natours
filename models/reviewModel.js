@@ -76,6 +76,8 @@ reviewSchema.post(/^findOneAnd/, async function () {
 	await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
+reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
+
 const Review = mongoose.model('Review', reviewSchema);
 
 export default Review;
