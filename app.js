@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
@@ -12,6 +13,10 @@ import reviewRouter from './routes/reviewRoute.js';
 import { AppError } from './utils/appError.js';
 
 const app = express();
+
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 
