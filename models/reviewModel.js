@@ -37,7 +37,7 @@ const reviewSchema = new mongoose.Schema(
 	}
 );
 
-reviewSchema.statics.calcAverageRatings = async function (tour) {
+reviewSchema.statics.calcAverageRatings = async function (tourId) {
 	const rating = await this.aggregate([
 		{
 			$match: { tour: tourId },
@@ -65,6 +65,15 @@ reviewSchema.statics.calcAverageRatings = async function (tour) {
 
 reviewSchema.post('save', function () {
 	this.constructor.calcAverageRatings(this.tour);
+});
+
+reviewSchema.pre(/^find/, function (next) {
+	this.populate({
+		path: 'user',
+		select: 'name photo',
+	});
+
+	next();
 });
 
 reviewSchema.pre(/^findOneAnd/, async function (next) {
