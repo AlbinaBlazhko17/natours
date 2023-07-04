@@ -12,6 +12,7 @@ import reviewRouter from './routes/reviewRoute.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import { AppError } from './utils/appError.js';
+import viewRouter from './routes/viewRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,13 +58,7 @@ app.use(
 	})
 );
 
-app.get('/', (req, res) => {
-	res.status(200).render('base', {
-		tour: 'The forest hiker',
-		user: 'Albinator',
-	});
-});
-
+app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
