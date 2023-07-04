@@ -1,16 +1,20 @@
 import express from 'express';
-import path from 'path';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import xss from 'xss-clean';
 import globalErrorHandler from './controller/errorController.js';
+import reviewRouter from './routes/reviewRoute.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
-import reviewRouter from './routes/reviewRoute.js';
 import { AppError } from './utils/appError.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -52,6 +56,10 @@ app.use(
 		],
 	})
 );
+
+app.get('/', (req, res) => {
+	res.status(200).render('base');
+});
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
