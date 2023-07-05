@@ -25,6 +25,37 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
 
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			defaultSrc: ["'self'", 'data:', 'blob:'],
+
+			fontSrc: ["'self'", 'https:', 'data:'],
+
+			scriptSrc: ["'self'", 'unsafe-inline'],
+
+			scriptSrc: [
+				"'self'",
+				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
+			],
+
+			scriptSrcElem: [
+				"'self'",
+				'https:',
+				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
+			],
+
+			styleSrc: ["'self'", 'https:', 'unsafe-inline'],
+
+			connectSrc: [
+				"'self'",
+				'data',
+				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
+			],
+		},
+	})
+);
+
 if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 }
