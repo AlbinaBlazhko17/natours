@@ -1,5 +1,4 @@
 import Tour from '../models/toursModel.js';
-import User from '../models/userModel.js';
 import catchAsync from '../utils/catchAsync.js';
 
 export const getOverview = catchAsync(async (req, res, next) => {
@@ -31,5 +30,11 @@ export const getTour = catchAsync(async (req, res, next) => {
 export const getLoginForm = (req, res) => {
 	res.status(200).render('login', {
 		title: 'Log into your account',
+	});
+};
+
+export const getRegisterForm = (req, res) => {
+	res.status(200).render('register', {
+		title: 'Register your account',
 	});
 };
