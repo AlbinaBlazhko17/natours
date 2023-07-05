@@ -13,6 +13,7 @@ import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import { AppError } from './utils/appError.js';
 import viewRouter from './routes/viewRoutes.js';
+import cookieParser from 'cookie-parser';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,6 +25,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
+app.use(cookieParser());
+app.use((req, res, next) => {
+	console.log(req.cookies);
+	next();
+});
 
 app.use(
 	helmet.contentSecurityPolicy({
