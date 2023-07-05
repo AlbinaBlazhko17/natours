@@ -16,6 +16,11 @@ export const getTour = catchAsync(async (req, res, next) => {
 		fields: 'review rating user',
 	});
 
+	res.set(
+		'Content-Security-Policy',
+		'connect-src https://*.tiles.mapbox.com https://api.mapbox.com https://events.mapbox.com'
+	);
+
 	res.status(200).render('tour', {
 		title: `${tour.name} tour`,
 		tour,
