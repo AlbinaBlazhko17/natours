@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
@@ -11,9 +12,8 @@ import globalErrorHandler from './controller/errorController.js';
 import reviewRouter from './routes/reviewRoute.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
-import { AppError } from './utils/appError.js';
 import viewRouter from './routes/viewRoutes.js';
-import cookieParser from 'cookie-parser';
+import { AppError } from './utils/appError.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
