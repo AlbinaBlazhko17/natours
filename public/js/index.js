@@ -1,10 +1,11 @@
-import { login } from './login.js';
+import { login, logout } from './login.js';
 import { displayMap } from './mapbox.js';
 import { register } from './register.js';
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.login-form');
 const registerForm = document.querySelector('.register-form');
+const logOutBtn = document.querySelector('.nav__el--logout');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -28,5 +29,12 @@ if (registerForm) {
 		const password = document.getElementById('password').value;
 		const passwordConfirm = document.getElementById('password-confirm').value;
 		register(name, email, password, passwordConfirm);
+	});
+}
+
+if (logOutBtn) {
+	logOutBtn.addEventListener('click', (e) => {
+		e.preventDefault();
+		logout();
 	});
 }

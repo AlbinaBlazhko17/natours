@@ -46,6 +46,14 @@ export const signUp = catchAsync(async (req, res, next) => {
 	createSendToken(newUser, 201, res);
 });
 
+export const logout = (req, res) => {
+	res.cookie('jwt', 'loggedout', {
+		expired: new Date(Date.now() + 10 * 1000),
+		httpOnly: true,
+	});
+	res.status(200).json({ status: 'success' });
+};
+
 export const login = catchAsync(async (req, res, next) => {
 	const { email, password } = req.body;
 
@@ -161,16 +169,19 @@ export const updatePassword = catchAsync(async (req, res, next) => {
 	createSendToken(user, 200, res);
 });
 
-export const isLoggedIn = catchAsync(async (req, res, next) => {
-	if (req.cookies.jwt) {
-		const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
+export const isLoggedIn = async (req, res, next) => {
+	try {
+		if (req.cookies.jwt) {
+			const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
 
-		const currentUser = await User.findById(decoded.id);
-		if (!currentUser) return next();
-		if (currentUser.changePasswordAfter(decoded.iat)) return next();
+			const currentUser = await User.findById(decoded.id);
+			if (!currentUser) return next();
+			if (currentUser.changePasswordAfter(decoded.iat)) return next();
 
-		res.locals.user = currentUser;
+			res.locals.user = currentUser;
+			return next();
+		}
+	} catch (err) {
 		return next();
 	}
-	next();
-});
+};
