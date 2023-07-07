@@ -1,11 +1,13 @@
 import { login, logout } from './login.js';
 import { displayMap } from './mapbox.js';
 import { register } from './register.js';
+import { updateSettings } from './updateSettings.js';
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.login-form');
 const registerForm = document.querySelector('.register-form');
 const logOutBtn = document.querySelector('.nav__el--logout');
+const formUserData = document.querySelector('.form-user-data');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -36,5 +38,16 @@ if (logOutBtn) {
 	logOutBtn.addEventListener('click', (e) => {
 		e.preventDefault();
 		logout();
+	});
+}
+
+if (formUserData) {
+	formUserData.addEventListener('submit', (e) => {
+		e.preventDefault();
+
+		const name = document.getElementById('name').value;
+		const email = document.getElementById('email').value;
+
+		updateSettings(name, email);
 	});
 }

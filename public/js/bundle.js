@@ -108,10 +108,35 @@ const $063fc4c5866f54d6$export$6503ec6e8aabbaf = async (name, email, password, p
 	}
 };
 
+const $a7bd2b0e83ecbd10$export$f558026a994b6051 = async (name, email) => {
+	try {
+		const res = await (0, $iniLV$axios)({
+			method: 'PATCH',
+			url: 'http://localhost:3000/api/v1/users/updateMe',
+			data: {
+				name: name,
+				email: email,
+			},
+		});
+		if (res.data.status === 'success') {
+			(0, $1eb0cc260df27e1b$export$de026b00723010c1)(
+				'success',
+				'Settings are successfully updated'
+			);
+			window.setTimeout(() => {
+				location.assign('/');
+			}, 1500);
+		}
+	} catch (err) {
+		(0, $1eb0cc260df27e1b$export$de026b00723010c1)('error', err.response.data.message);
+	}
+};
+
 const $1cd085a7ac742057$var$mapBox = document.getElementById('map');
 const $1cd085a7ac742057$var$loginForm = document.querySelector('.login-form');
 const $1cd085a7ac742057$var$registerForm = document.querySelector('.register-form');
 const $1cd085a7ac742057$var$logOutBtn = document.querySelector('.nav__el--logout');
+const $1cd085a7ac742057$var$formUserData = document.querySelector('.form-user-data');
 if ($1cd085a7ac742057$var$mapBox) {
 	const locations = JSON.parse($1cd085a7ac742057$var$mapBox.dataset.locations);
 	(0, $f6b1c9ed51ec7162$export$4c5dd147b21b9176)(locations);
@@ -136,6 +161,13 @@ if ($1cd085a7ac742057$var$logOutBtn)
 	$1cd085a7ac742057$var$logOutBtn.addEventListener('click', (e) => {
 		e.preventDefault();
 		(0, $e33d9ff231aec008$export$a0973bcfe11b05c9)();
+	});
+if ($1cd085a7ac742057$var$formUserData)
+	$1cd085a7ac742057$var$formUserData.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const name = document.getElementById('name').value;
+		const email = document.getElementById('email').value;
+		(0, $a7bd2b0e83ecbd10$export$f558026a994b6051)(name, email);
 	});
 
 //# sourceMappingURL=bundle.js.map

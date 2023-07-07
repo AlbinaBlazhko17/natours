@@ -28,6 +28,13 @@ app.use(helmet());
 app.use(cookieParser());
 
 app.use(
+	express.urlencoded({
+		extended: true,
+		limit: '10kb',
+	})
+);
+
+app.use(
 	helmet.contentSecurityPolicy({
 		directives: {
 			defaultSrc: ["'self'", 'data:', 'blob:'],
