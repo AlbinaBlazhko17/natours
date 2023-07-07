@@ -1,4 +1,5 @@
 import Tour from '../models/toursModel.js';
+import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
 
 export const getOverview = catchAsync(async (req, res, next) => {
@@ -15,6 +16,10 @@ export const getTour = catchAsync(async (req, res, next) => {
 		path: 'reviews',
 		fields: 'review rating user',
 	});
+
+	if (!tour) {
+		return next(new AppError('There is no tour with that name', 404));
+	}
 
 	res.set(
 		'Content-Security-Policy',
@@ -36,5 +41,11 @@ export const getLoginForm = (req, res) => {
 export const getRegisterForm = (req, res) => {
 	res.status(200).render('register', {
 		title: 'Register your account',
+	});
+};
+
+export const getAccount = (req, res) => {
+	res.status(200).render('account', {
+		title: 'Your account',
 	});
 };

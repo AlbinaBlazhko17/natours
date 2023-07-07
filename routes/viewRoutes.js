@@ -4,15 +4,18 @@ import {
 	getTour,
 	getLoginForm,
 	getRegisterForm,
+	getAccount,
 } from '../controller/viewsController.js';
-import { isLoggedIn } from '../controller/authController.js';
+import { isLoggedIn, protect } from '../controller/authController.js';
 
 const viewRouter = express.Router();
 
 viewRouter.use(isLoggedIn);
-viewRouter.get('/', getOverview);
-viewRouter.get('/tour/:slug', getTour);
-viewRouter.get('/login', getLoginForm);
-viewRouter.get('/register', getRegisterForm);
+
+viewRouter.get('/', isLoggedIn, getOverview);
+viewRouter.get('/tour/:slug', isLoggedIn, getTour);
+viewRouter.get('/login', isLoggedIn, getLoginForm);
+viewRouter.get('/register', isLoggedIn, getRegisterForm);
+viewRouter.get('/me', protect, getAccount);
 
 export default viewRouter;
