@@ -68,8 +68,32 @@ const $f6b1c9ed51ec7162$export$4c5dd147b21b9176 = (locations) => {
 	});
 };
 
+const $063fc4c5866f54d6$export$6503ec6e8aabbaf = async (name, email, password, passwordConfirm) => {
+	try {
+		const res = await (0, $iniLV$axios)({
+			method: 'POST',
+			url: 'http://localhost:3000/api/v1/users/signup',
+			data: {
+				name: name,
+				email: email,
+				password: password,
+				passwordConfirm: passwordConfirm,
+			},
+		});
+		if (res.data.status === 'success') {
+			(0, $1eb0cc260df27e1b$export$de026b00723010c1)('success', 'Registered successfully!');
+			window.setTimeout(() => {
+				location.assign('/login');
+			}, 1500);
+		}
+	} catch (err) {
+		(0, $1eb0cc260df27e1b$export$de026b00723010c1)('error', err.response.data.message);
+	}
+};
+
 const $1cd085a7ac742057$var$mapBox = document.getElementById('map');
-const $1cd085a7ac742057$var$loginForm = document.querySelector('.form');
+const $1cd085a7ac742057$var$loginForm = document.querySelector('.login-form');
+const $1cd085a7ac742057$var$registerForm = document.querySelector('.register-form');
 if ($1cd085a7ac742057$var$mapBox) {
 	const locations = JSON.parse($1cd085a7ac742057$var$mapBox.dataset.locations);
 	(0, $f6b1c9ed51ec7162$export$4c5dd147b21b9176)(locations);
@@ -80,6 +104,15 @@ if ($1cd085a7ac742057$var$loginForm)
 		const email = document.getElementById('email').value;
 		const password = document.getElementById('password').value;
 		(0, $e33d9ff231aec008$export$596d806903d1f59e)(email, password);
+	});
+if ($1cd085a7ac742057$var$registerForm)
+	$1cd085a7ac742057$var$registerForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const name = document.getElementById('name').value;
+		const email = document.getElementById('email').value;
+		const password = document.getElementById('password').value;
+		const passwordConfirm = document.getElementById('password-confirm').value;
+		(0, $063fc4c5866f54d6$export$6503ec6e8aabbaf)(name, email, password, passwordConfirm);
 	});
 
 //# sourceMappingURL=bundle.js.map
