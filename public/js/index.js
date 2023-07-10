@@ -9,6 +9,7 @@ const registerForm = document.querySelector('.register-form');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const formUserData = document.querySelector('.form-user-data');
 const formUserPassword = document.querySelector('.form-user-password');
+const fileInput = document.querySelector('.form__upload');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -49,9 +50,24 @@ if (formUserData) {
 		const form = new FormData();
 		form.append('name', document.getElementById('name').value);
 		form.append('email', document.getElementById('email').value);
-		form.append('photo', document.getElementById('photo').files[0]);
 
 		updateSettings(form, 'data');
+	});
+}
+
+if (fileInput) {
+	fileInput.addEventListener('change', async (e) => {
+		const form = new FormData();
+		form.append('photo', document.getElementById('photo').files[0]);
+
+		const newImage = await updateSettings(form, 'photo');
+
+		if (newImage) {
+			document.querySelector('.nav__user-img').setAttribute('src', `/img/users/${newImage}`);
+			document
+				.querySelector('.form__user-photo')
+				.setAttribute('src', `/img/users/${newImage}`);
+		}
 	});
 }
 

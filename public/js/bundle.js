@@ -120,10 +120,12 @@ const $a7bd2b0e83ecbd10$export$f558026a994b6051 = async (data, type) => {
 			data: data,
 		});
 		if (res.data.status === 'success') {
+			console.log(res.data.data.user.photo);
 			(0, $1eb0cc260df27e1b$export$de026b00723010c1)(
 				'success',
 				`${type.toUpperCase()} are successfully updated`
 			);
+			if (type === 'photo') return res.data.data.user.photo;
 			window.setTimeout(() => {
 				location.assign('/');
 			}, 1500);
@@ -139,6 +141,7 @@ const $1cd085a7ac742057$var$registerForm = document.querySelector('.register-for
 const $1cd085a7ac742057$var$logOutBtn = document.querySelector('.nav__el--logout');
 const $1cd085a7ac742057$var$formUserData = document.querySelector('.form-user-data');
 const $1cd085a7ac742057$var$formUserPassword = document.querySelector('.form-user-password');
+const $1cd085a7ac742057$var$fileInput = document.querySelector('.form__upload');
 if ($1cd085a7ac742057$var$mapBox) {
 	const locations = JSON.parse($1cd085a7ac742057$var$mapBox.dataset.locations);
 	(0, $f6b1c9ed51ec7162$export$4c5dd147b21b9176)(locations);
@@ -170,8 +173,19 @@ if ($1cd085a7ac742057$var$formUserData)
 		const form = new FormData();
 		form.append('name', document.getElementById('name').value);
 		form.append('email', document.getElementById('email').value);
-		form.append('photo', document.getElementById('photo').files[0]);
 		(0, $a7bd2b0e83ecbd10$export$f558026a994b6051)(form, 'data');
+	});
+if ($1cd085a7ac742057$var$fileInput)
+	$1cd085a7ac742057$var$fileInput.addEventListener('change', async (e) => {
+		const form = new FormData();
+		form.append('photo', document.getElementById('photo').files[0]);
+		const newImage = await (0, $a7bd2b0e83ecbd10$export$f558026a994b6051)(form, 'photo');
+		if (newImage) {
+			document.querySelector('.nav__user-img').setAttribute('src', `/img/users/${newImage}`);
+			document
+				.querySelector('.form__user-photo')
+				.setAttribute('src', `/img/users/${newImage}`);
+		}
 	});
 if ($1cd085a7ac742057$var$formUserPassword)
 	$1cd085a7ac742057$var$formUserPassword.addEventListener('submit', async (e) => {

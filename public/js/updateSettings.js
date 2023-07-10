@@ -15,6 +15,9 @@ export const updateSettings = async (data, type) => {
 
 		if (res.data.status === 'success') {
 			showAlert('success', `${type.toUpperCase()} are successfully updated`);
+			if (type === 'photo') {
+				return res.data.data.user.photo;
+			}
 
 			window.setTimeout(() => {
 				location.assign('/');
