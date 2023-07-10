@@ -1,4 +1,5 @@
 import express from 'express';
+
 import {
 	forgotPassword,
 	login,
@@ -17,6 +18,7 @@ import {
 	getUser,
 	updateMe,
 	updateUser,
+	uploadUserPhoto,
 } from '../controller/userController.js';
 
 const userRouter = express.Router();
@@ -32,7 +34,7 @@ userRouter.patch('/resetPassword/:token', resetPassword);
 userRouter.patch('/updateMyPassword', updatePassword);
 
 userRouter.get('/me', getMe);
-userRouter.patch('/updateMe', updateMe, getUser);
+userRouter.patch('/updateMe', uploadUserPhoto, updateMe);
 userRouter.delete('/deleteMe', deleteMe);
 
 userRouter.use(restrictTo('admin'));
