@@ -1,4 +1,5 @@
 import multer from 'multer';
+import sharp from 'sharp';
 import User from '../models/userModel.js';
 import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
@@ -28,6 +29,20 @@ const upload = multer({
 });
 
 export const uploadUserPhoto = upload.single('photo');
+
+export const resizeUserPhoto = (req, res, next) => {
+	if (!req.file) return next();
+
+	req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+	sharp(req.file.buffer)
+		.resize(500, 500)
+		.toFormat('jpeg')
+		.jpeg({ quality: 90 })
+		.toFile(`public/img/users/${req.file.filename}`);
+
+	next();
+};
 
 const filteredObj = (obj, ...allowedFildes) => {
 	const newObj = {};

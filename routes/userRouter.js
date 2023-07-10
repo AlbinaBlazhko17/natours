@@ -19,6 +19,7 @@ import {
 	updateMe,
 	updateUser,
 	uploadUserPhoto,
+	resizeUserPhoto,
 } from '../controller/userController.js';
 
 const userRouter = express.Router();
@@ -34,7 +35,7 @@ userRouter.patch('/resetPassword/:token', resetPassword);
 userRouter.patch('/updateMyPassword', updatePassword);
 
 userRouter.get('/me', getMe);
-userRouter.patch('/updateMe', uploadUserPhoto, updateMe);
+userRouter.patch('/updateMe', uploadUserPhoto, resizeUserPhoto, updateMe);
 userRouter.delete('/deleteMe', deleteMe);
 
 userRouter.use(restrictTo('admin'));
