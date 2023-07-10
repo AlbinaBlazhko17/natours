@@ -5,15 +5,7 @@ import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
 import { deleteOne, getAll, getOne, updateOne } from './handlerFactory.js';
 
-const multerStorage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, 'public/img/users');
-	},
-	filename: (req, file, cb) => {
-		const ext = file.mimetype.split('/')[1];
-		cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-	},
-});
+const multerStorage = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
 	if (file.mimetype.startsWith('image')) {

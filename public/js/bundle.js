@@ -167,15 +167,11 @@ if ($1cd085a7ac742057$var$logOutBtn)
 if ($1cd085a7ac742057$var$formUserData)
 	$1cd085a7ac742057$var$formUserData.addEventListener('submit', (e) => {
 		e.preventDefault();
-		const name = document.getElementById('name').value;
-		const email = document.getElementById('email').value;
-		(0, $a7bd2b0e83ecbd10$export$f558026a994b6051)(
-			{
-				name: name,
-				email: email,
-			},
-			'data'
-		);
+		const form = new FormData();
+		form.append('name', document.getElementById('name').value);
+		form.append('email', document.getElementById('email').value);
+		form.append('photo', document.getElementById('photo').files[0]);
+		(0, $a7bd2b0e83ecbd10$export$f558026a994b6051)(form, 'data');
 	});
 if ($1cd085a7ac742057$var$formUserPassword)
 	$1cd085a7ac742057$var$formUserPassword.addEventListener('submit', async (e) => {
