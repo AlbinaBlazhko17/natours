@@ -17,7 +17,7 @@ export const register = async (name, email, password, passwordConfirm) => {
 		if (res.data.status === 'success') {
 			showAlert('success', 'Registered successfully!');
 			window.setTimeout(() => {
-				location.assign('/login');
+				location.assign('/me');
 			}, 1500);
 		}
 	} catch (err) {

@@ -18,17 +18,17 @@ class Email {
 			return 1;
 		}
 
-		return (transporter = nodemailer.createTransport({
+		return nodemailer.createTransport({
 			host: process.env.EMAIL_HOST,
 			auth: {
 				user: process.env.EMAIL_USERNAME,
 				pass: process.env.EMAIL_PASSWORD,
 			},
-		}));
+		});
 	}
 
 	async send(template, subject) {
-		const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
+		const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
 			firstName: this.firstName,
 			url: this.url,
 			subject,
@@ -39,7 +39,7 @@ class Email {
 			to: this.to,
 			subject,
 			html,
-			text: htmlToText.fromString(html),
+			text: htmlToText(html),
 		};
 
 		await this.createTransport().sendMail(mailOptions);

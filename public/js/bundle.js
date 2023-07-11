@@ -100,7 +100,7 @@ const $063fc4c5866f54d6$export$6503ec6e8aabbaf = async (name, email, password, p
 		if (res.data.status === 'success') {
 			(0, $1eb0cc260df27e1b$export$de026b00723010c1)('success', 'Registered successfully!');
 			window.setTimeout(() => {
-				location.assign('/login');
+				location.assign('/me');
 			}, 1500);
 		}
 	} catch (err) {
@@ -120,7 +120,6 @@ const $a7bd2b0e83ecbd10$export$f558026a994b6051 = async (data, type) => {
 			data: data,
 		});
 		if (res.data.status === 'success') {
-			console.log(res.data.data.user.photo);
 			(0, $1eb0cc260df27e1b$export$de026b00723010c1)(
 				'success',
 				`${type.toUpperCase()} are successfully updated`
