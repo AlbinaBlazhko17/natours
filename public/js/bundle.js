@@ -11,6 +11,30 @@ const $1eb0cc260df27e1b$export$de026b00723010c1 = (type, msg) => {
 	window.setTimeout($1eb0cc260df27e1b$export$516836c6a9dfc573, 5000);
 };
 
+const $674e98ca3fcec722$export$66791fb2cfeec3e = async (email) => {
+	try {
+		const res = await (0, $iniLV$axios)({
+			method: 'POST',
+			url: 'http://localhost:3000/api/v1/users/forgotPassword',
+			data: {
+				email: email,
+			},
+		});
+		if (res.data.status === 'success') {
+			(0, $1eb0cc260df27e1b$export$de026b00723010c1)(
+				'success',
+				'Reset password has been sent to your email!'
+			);
+			window.setTimeout(() => {
+				location.assign('/');
+			}, 1500);
+		}
+	} catch (err) {
+		// showAlert('error', err.response.message);
+		console.log(err);
+	}
+};
+
 const $e33d9ff231aec008$export$596d806903d1f59e = async (email, password) => {
 	try {
 		const res = await (0, $iniLV$axios)({
@@ -141,6 +165,7 @@ const $1cd085a7ac742057$var$logOutBtn = document.querySelector('.nav__el--logout
 const $1cd085a7ac742057$var$formUserData = document.querySelector('.form-user-data');
 const $1cd085a7ac742057$var$formUserPassword = document.querySelector('.form-user-password');
 const $1cd085a7ac742057$var$fileInput = document.querySelector('.form__upload');
+const $1cd085a7ac742057$var$formForgot = document.querySelector('.forgot-form');
 if ($1cd085a7ac742057$var$mapBox) {
 	const locations = JSON.parse($1cd085a7ac742057$var$mapBox.dataset.locations);
 	(0, $f6b1c9ed51ec7162$export$4c5dd147b21b9176)(locations);
@@ -207,6 +232,12 @@ if ($1cd085a7ac742057$var$formUserPassword)
 		document.getElementById('password-current').value = '';
 		document.getElementById('password').value = '';
 		document.getElementById('password-confirm').value = '';
+	});
+if ($1cd085a7ac742057$var$formForgot)
+	$1cd085a7ac742057$var$formForgot.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const email = document.getElementById('email').value;
+		(0, $674e98ca3fcec722$export$66791fb2cfeec3e)(email);
 	});
 
 //# sourceMappingURL=bundle.js.map

@@ -6,6 +6,7 @@ import {
 	getRegisterForm,
 	getAccount,
 	updateUserData,
+	getForgotPassword,
 } from '../controller/viewsController.js';
 import { isLoggedIn, protect } from '../controller/authController.js';
 
@@ -17,6 +18,7 @@ viewRouter.get('/', isLoggedIn, getOverview);
 viewRouter.get('/tour/:slug', isLoggedIn, getTour);
 viewRouter.get('/login', isLoggedIn, getLoginForm);
 viewRouter.get('/register', isLoggedIn, getRegisterForm);
+viewRouter.get('/forgotPassword', getForgotPassword);
 viewRouter.get('/me', protect, getAccount);
 viewRouter.post('/submit-user-data', protect, updateUserData);
 

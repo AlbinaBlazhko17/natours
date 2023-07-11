@@ -1,3 +1,4 @@
+import { forgotPassword } from './forgot.js';
 import { login, logout } from './login.js';
 import { displayMap } from './mapbox.js';
 import { register } from './register.js';
@@ -10,6 +11,7 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const formUserData = document.querySelector('.form-user-data');
 const formUserPassword = document.querySelector('.form-user-password');
 const fileInput = document.querySelector('.form__upload');
+const formForgot = document.querySelector('.forgot-form');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -87,5 +89,14 @@ if (formUserPassword) {
 		document.getElementById('password-current').value = '';
 		document.getElementById('password').value = '';
 		document.getElementById('password-confirm').value = '';
+	});
+}
+
+if (formForgot) {
+	formForgot.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const email = document.getElementById('email').value;
+
+		forgotPassword(email);
 	});
 }

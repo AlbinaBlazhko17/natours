@@ -67,6 +67,12 @@ body {
   margin: 0 auto;
 }
 
+.ma-cnt {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
 .ma-bt-md {
   margin-bottom: 3rem !important;
 }
@@ -263,6 +269,10 @@ body {
 
 .btn-small:hover {
   background-color: #7dd56f;
+}
+
+.btn-reset {
+  margin: 0 auto;
 }
 
 .btn-text:link,
@@ -1221,7 +1231,7 @@ body {
   margin: 0 auto;
 }
 
-.login-form {
+.login-form, .forgot-form {
   margin: 0 auto;
   max-width: 55rem;
   background-color: #fff;
@@ -1274,6 +1284,18 @@ body {
 
 .form__group:not(:last-child) {
   margin-bottom: 2.5rem;
+}
+
+.form__group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot {
+  font-size: 1.6rem;
+  text-decoration: none;
+  color: #777;
 }
 
 .form__label {

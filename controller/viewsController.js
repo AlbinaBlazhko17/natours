@@ -52,7 +52,6 @@ export const getAccount = (req, res) => {
 };
 
 export const updateUserData = catchAsync(async (req, res, next) => {
-	console.log(req.body.email);
 	const updatedUser = await User.findByIdAndUpdate(
 		req.user.id,
 		{
@@ -70,3 +69,10 @@ export const updateUserData = catchAsync(async (req, res, next) => {
 		user: updatedUser,
 	});
 });
+
+export const getForgotPassword = (req, res) => {
+	res.set('Content-Security-Policy');
+	res.status(200).render('forgotPassword', {
+		title: 'Forgot password',
+	});
+};

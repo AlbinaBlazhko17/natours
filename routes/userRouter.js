@@ -28,10 +28,11 @@ userRouter.post('/signup', signUp);
 userRouter.get('/logout', logout);
 userRouter.post('/login', login);
 
-userRouter.use(protect);
-
 userRouter.post('/forgotPassword', forgotPassword);
 userRouter.patch('/resetPassword/:token', resetPassword);
+
+userRouter.use(protect);
+
 userRouter.patch('/updateMyPassword', updatePassword);
 
 userRouter.get('/me', getMe);
