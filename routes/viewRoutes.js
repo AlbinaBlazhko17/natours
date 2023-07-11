@@ -7,8 +7,9 @@ import {
 	getAccount,
 	updateUserData,
 	getForgotPassword,
+	getResetPassword,
 } from '../controller/viewsController.js';
-import { isLoggedIn, protect } from '../controller/authController.js';
+import { isLoggedIn, protect, resetPassword } from '../controller/authController.js';
 
 const viewRouter = express.Router();
 
@@ -19,6 +20,8 @@ viewRouter.get('/tour/:slug', isLoggedIn, getTour);
 viewRouter.get('/login', isLoggedIn, getLoginForm);
 viewRouter.get('/register', isLoggedIn, getRegisterForm);
 viewRouter.get('/forgotPassword', getForgotPassword);
+viewRouter.get('/resetPassword/:token', getResetPassword);
+// viewRouter.patch('/resetPassword/:token', resetPassword);
 viewRouter.get('/me', protect, getAccount);
 viewRouter.post('/submit-user-data', protect, updateUserData);
 

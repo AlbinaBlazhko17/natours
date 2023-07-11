@@ -3,6 +3,7 @@ import { login, logout } from './login.js';
 import { displayMap } from './mapbox.js';
 import { register } from './register.js';
 import { updateSettings } from './updateSettings.js';
+import { resetPassword } from './reset.js';
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.login-form');
@@ -11,7 +12,8 @@ const logOutBtn = document.querySelector('.nav__el--logout');
 const formUserData = document.querySelector('.form-user-data');
 const formUserPassword = document.querySelector('.form-user-password');
 const fileInput = document.querySelector('.form__upload');
-const formForgot = document.querySelector('.forgot-form');
+const passwordForgotForm = document.querySelector('.forgot-form');
+const passwordResetForm = document.querySelector('.reset-form');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -92,11 +94,21 @@ if (formUserPassword) {
 	});
 }
 
-if (formForgot) {
-	formForgot.addEventListener('submit', (e) => {
+if (passwordForgotForm) {
+	passwordForgotForm.addEventListener('submit', (e) => {
 		e.preventDefault();
 		const email = document.getElementById('email').value;
 
 		forgotPassword(email);
+	});
+}
+
+if (passwordResetForm) {
+	passwordResetForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const password = document.getElementById('password').value;
+		const passwordConfirm = document.getElementById('password-confirm').value;
+
+		resetPassword(password, passwordConfirm);
 	});
 }

@@ -1231,7 +1231,7 @@ body {
   margin: 0 auto;
 }
 
-.login-form, .forgot-form {
+.login-form, .forgot-form, .reset-form {
   margin: 0 auto;
   max-width: 55rem;
   background-color: #fff;

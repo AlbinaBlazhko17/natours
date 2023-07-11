@@ -71,8 +71,13 @@ export const updateUserData = catchAsync(async (req, res, next) => {
 });
 
 export const getForgotPassword = (req, res) => {
-	res.set('Content-Security-Policy');
 	res.status(200).render('forgotPassword', {
 		title: 'Forgot password',
+	});
+};
+
+export const getResetPassword = (req, res) => {
+	res.status(200).render('reset', {
+		title: 'Reset password',
 	});
 };

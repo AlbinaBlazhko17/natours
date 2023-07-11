@@ -30,8 +30,7 @@ const $674e98ca3fcec722$export$66791fb2cfeec3e = async (email) => {
 			}, 1500);
 		}
 	} catch (err) {
-		// showAlert('error', err.response.message);
-		console.log(err);
+		(0, $1eb0cc260df27e1b$export$de026b00723010c1)('error', err.response.message);
 	}
 };
 
@@ -158,6 +157,32 @@ const $a7bd2b0e83ecbd10$export$f558026a994b6051 = async (data, type) => {
 	}
 };
 
+const $6bf190d5429d448a$export$dc726c8e334dd814 = async (password, passwordConfirm) => {
+	try {
+		const res = await (0, $iniLV$axios)({
+			method: 'PATCH',
+			url: `http://localhost:3000/api/v1/users/resetPassword/${
+				window.location.pathname.split('/')[2]
+			}`,
+			data: {
+				password: password,
+				passwordConfirm: passwordConfirm,
+			},
+		});
+		if (res.data.status === 'success') {
+			(0, $1eb0cc260df27e1b$export$de026b00723010c1)(
+				'success',
+				'Password has been successfully reset!'
+			);
+			window.setTimeout(() => {
+				location.assign('/');
+			}, 1500);
+		}
+	} catch (err) {
+		(0, $1eb0cc260df27e1b$export$de026b00723010c1)('error', err.response.data.message);
+	}
+};
+
 const $1cd085a7ac742057$var$mapBox = document.getElementById('map');
 const $1cd085a7ac742057$var$loginForm = document.querySelector('.login-form');
 const $1cd085a7ac742057$var$registerForm = document.querySelector('.register-form');
@@ -165,7 +190,8 @@ const $1cd085a7ac742057$var$logOutBtn = document.querySelector('.nav__el--logout
 const $1cd085a7ac742057$var$formUserData = document.querySelector('.form-user-data');
 const $1cd085a7ac742057$var$formUserPassword = document.querySelector('.form-user-password');
 const $1cd085a7ac742057$var$fileInput = document.querySelector('.form__upload');
-const $1cd085a7ac742057$var$formForgot = document.querySelector('.forgot-form');
+const $1cd085a7ac742057$var$passwordForgotForm = document.querySelector('.forgot-form');
+const $1cd085a7ac742057$var$passwordResetForm = document.querySelector('.reset-form');
 if ($1cd085a7ac742057$var$mapBox) {
 	const locations = JSON.parse($1cd085a7ac742057$var$mapBox.dataset.locations);
 	(0, $f6b1c9ed51ec7162$export$4c5dd147b21b9176)(locations);
@@ -233,11 +259,18 @@ if ($1cd085a7ac742057$var$formUserPassword)
 		document.getElementById('password').value = '';
 		document.getElementById('password-confirm').value = '';
 	});
-if ($1cd085a7ac742057$var$formForgot)
-	$1cd085a7ac742057$var$formForgot.addEventListener('submit', (e) => {
+if ($1cd085a7ac742057$var$passwordForgotForm)
+	$1cd085a7ac742057$var$passwordForgotForm.addEventListener('submit', (e) => {
 		e.preventDefault();
 		const email = document.getElementById('email').value;
 		(0, $674e98ca3fcec722$export$66791fb2cfeec3e)(email);
+	});
+if ($1cd085a7ac742057$var$passwordResetForm)
+	$1cd085a7ac742057$var$passwordResetForm.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const password = document.getElementById('password').value;
+		const passwordConfirm = document.getElementById('password-confirm').value;
+		(0, $6bf190d5429d448a$export$dc726c8e334dd814)(password, passwordConfirm);
 	});
 
 //# sourceMappingURL=bundle.js.map

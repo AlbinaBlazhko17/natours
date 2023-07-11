@@ -1,0 +1,16 @@
+extends base
+
+block content
+	main.main
+		.reset-form
+			h2.heading-secondary.ma-cnt.ma-bt-lg Reset password
+			form.form
+				.form__group.ma-bt-md
+					label.form__label(for='password') Password
+					input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+				.form__group.ma-bt-lg
+					label.form__label(for='password-confirm') Confirm password
+					input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+				.form__group
+					button.btn.btn--green Save password
+	script(src='../js/reset.js')
