@@ -58,6 +58,7 @@ if (formUserData) {
 if (fileInput) {
 	fileInput.addEventListener('change', async (e) => {
 		const form = new FormData();
+
 		form.append('photo', document.getElementById('photo').files[0]);
 
 		const newImage = await updateSettings(form, 'photo');
