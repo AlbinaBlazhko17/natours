@@ -117,14 +117,8 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 		'host'
 	)}/api/v1/users/resetPassword/${resetToken}`;
 
-	const message = `Forgot yout password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\n If you didn't forget your password, please ignore this emai!`;
-
 	try {
-		// await sendEmail({
-		// 	email: req.body.email,
-		// 	subject: 'Your password reset token (valid for 10 min)',
-		// 	message,
-		// });
+		await new Email(user, resetURL).sendPasswordReset();
 
 		res.status(200).json({
 			status: 'success',
