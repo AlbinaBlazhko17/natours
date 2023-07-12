@@ -15,7 +15,14 @@ class Email {
 
 	createTransport() {
 		if (process.env.NODE_ENV === 'production') {
-			return 1;
+			return nodemailer.createTransport({
+				host: 'smtp-relay.sendinblue.com',
+				port: 587,
+				auth: {
+					user: process.env.SENDGRID_USERNAME,
+					pass: process.env.SENDGRID_PASSWORD,
+				},
+			});
 		}
 
 		return nodemailer.createTransport({
