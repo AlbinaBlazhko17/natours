@@ -132,7 +132,8 @@ body {
   color: transparent;
   letter-spacing: 0.1rem;
   line-height: 1.3;
-  display: inline-block;
+  display: block;
+  text-align: center;
 }
 .heading-secondary--error {
   background-image: -webkit-gradient(
@@ -271,7 +272,7 @@ body {
   background-color: #7dd56f;
 }
 
-.btn-reset {
+.btn-center {
   margin: 0 auto;
 }
 
@@ -1303,6 +1304,7 @@ body {
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
+  width: 100%;
 }
 
 .form__photo-upload {
