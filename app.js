@@ -13,6 +13,7 @@ import reviewRouter from './routes/reviewRoute.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import viewRouter from './routes/viewRoutes.js';
+import bookingRouter from './routes/bookingsRoute.js';
 import { AppError } from './utils/appError.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -102,6 +103,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
