@@ -1234,7 +1234,7 @@ body {
 
 .login-form, .forgot-form, .reset-form {
   margin: 0 auto;
-  max-width: 55rem;
+  max-width: 59rem;
   background-color: #fff;
   -webkit-box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
   box-shadow: 0 2.5rem 8rem 2rem rgba(0, 0, 0, 0.06);
@@ -1304,7 +1304,7 @@ body {
   font-size: 1.6rem;
   font-weight: 700;
   margin-bottom: 0.75rem;
-  width: 100%;
+  width: 50%;
 }
 
 .form__photo-upload {

@@ -16,7 +16,6 @@ export const getCheckoutSession = catchAsync(async (req, res, next) => {
 		customer_email: req.user.email,
 		client_reference_id: req.params.tourId,
 		mode: 'payment',
-		payment_method: 'pm_card_visa',
 		line_items: [
 			{
 				price_data: {
