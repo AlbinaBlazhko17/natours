@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { showAlert } from './alerts.js';
 
 export const resetPassword = async (password, passwordConfirm) => {

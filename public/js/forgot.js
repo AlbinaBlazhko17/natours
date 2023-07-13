@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { showAlert } from './alerts.js';
 
 export const forgotPassword = async (email) => {

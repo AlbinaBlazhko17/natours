@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { showAlert } from './alerts.js';
 
 export const login = async (email, password) => {
@@ -38,6 +37,6 @@ export const logout = async () => {
 			}, 1500);
 		}
 	} catch (err) {
-		showAlert('error', 'Error logging out! Try again.');
+		showAlert('error', err);
 	}
 };

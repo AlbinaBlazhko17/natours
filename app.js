@@ -38,30 +38,46 @@ app.use(
 app.use(
 	helmet.contentSecurityPolicy({
 		directives: {
-			defaultSrc: ["'self'", 'data:', 'blob:'],
-
+			defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
+			baseUri: ["'self'"],
 			fontSrc: ["'self'", 'https:', 'data:'],
-
-			scriptSrc: ["'self'", 'unsafe-inline'],
-
 			scriptSrc: [
 				"'self'",
-				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
-			],
-
-			scriptSrcElem: [
-				"'self'",
 				'https:',
-				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
+				'http:',
+				'blob:',
+				'https://*.mapbox.com',
+				'https://js.stripe.com',
+				'https://m.stripe.network',
+				'https://*.cloudflare.com',
 			],
-
-			styleSrc: ["'self'", 'https:', 'unsafe-inline'],
-
+			frameSrc: ["'self'", 'https://js.stripe.com'],
+			objectSrc: ["'none'"],
+			styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
+			workerSrc: [
+				"'self'",
+				'data:',
+				'blob:',
+				'https://*.tiles.mapbox.com',
+				'https://api.mapbox.com',
+				'https://events.mapbox.com',
+				'https://m.stripe.network',
+			],
+			childSrc: ["'self'", 'blob:'],
+			imgSrc: ["'self'", 'data:', 'blob:'],
+			formAction: ["'self'"],
 			connectSrc: [
 				"'self'",
-				'data',
-				'https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js',
+				"'unsafe-inline'",
+				'data:',
+				'blob:',
+				'https://*.stripe.com',
+				'https://*.mapbox.com',
+				'https://*.cloudflare.com/',
+				'https://bundle.js:*',
+				'ws://localhost:3000/',
 			],
+			upgradeInsecureRequests: [],
 		},
 	})
 );

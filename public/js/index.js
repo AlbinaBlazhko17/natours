@@ -4,6 +4,7 @@ import { displayMap } from './mapbox.js';
 import { register } from './register.js';
 import { updateSettings } from './updateSettings.js';
 import { resetPassword } from './reset.js';
+import { bookTour } from './stripe.js';
 
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.login-form');
@@ -14,6 +15,7 @@ const formUserPassword = document.querySelector('.form-user-password');
 const fileInput = document.querySelector('.form__upload');
 const passwordForgotForm = document.querySelector('.forgot-form');
 const passwordResetForm = document.querySelector('.reset-form');
+const bookBtn = document.getElementById('book-tour');
 
 if (mapBox) {
 	const locations = JSON.parse(mapBox.dataset.locations);
@@ -110,5 +112,13 @@ if (passwordResetForm) {
 		const passwordConfirm = document.getElementById('password-confirm').value;
 
 		resetPassword(password, passwordConfirm);
+	});
+}
+
+if (bookBtn) {
+	bookBtn.addEventListener('click', (e) => {
+		e.target.textContent = 'Processing...';
+		const { tourId } = e.target.dataset;
+		bookTour(tourId);
 	});
 }

@@ -5,6 +5,7 @@ import catchAsync from '../utils/catchAsync.js';
 export const getCheckoutSession = catchAsync(async (req, res, next) => {
 	// 1) Get the currently booked tour
 	const tour = await Tour.findById(req.params.tourId).exec();
+	const invoice = await stripe.invoices.finalizeInvoice('{{INVOICE_ID}}');
 	// console.log(tour);
 
 	const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
