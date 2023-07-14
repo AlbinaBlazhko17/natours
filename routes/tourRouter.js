@@ -14,7 +14,7 @@ import {
 	resizeTourImages,
 } from '../controller/toursController.js';
 import { protect, restrictTo } from '../controller/authController.js';
-import reviewRouter from './reviewRoute.js';
+import reviewRouter from './reviewRouter.js';
 
 const tourRouter = express.Router();
 

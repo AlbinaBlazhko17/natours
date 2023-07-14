@@ -9,10 +9,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import xss from 'xss-clean';
 import globalErrorHandler from './controller/errorController.js';
-import reviewRouter from './routes/reviewRoute.js';
+import reviewRouter from './routes/reviewRouter.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
-import viewRouter from './routes/viewRoutes.js';
+import viewRouter from './routes/viewRouter.js';
 import bookingRouter from './routes/bookingsRoute.js';
 import { AppError } from './utils/appError.js';
 
