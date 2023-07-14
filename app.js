@@ -13,7 +13,7 @@ import reviewRouter from './routes/reviewRouter.js';
 import tourRouter from './routes/tourRouter.js';
 import userRouter from './routes/userRouter.js';
 import viewRouter from './routes/viewRouter.js';
-import bookingRouter from './routes/bookingsRouter.js';
+import bookingRouter from './routes/bookingRouter.js';
 import { AppError } from './utils/appError.js';
 
 const __filename = fileURLToPath(import.meta.url);
