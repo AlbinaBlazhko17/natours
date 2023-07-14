@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import Tour from '../models/toursModel.js';
+import Tour from '../models/tourModel.js';
 import catchAsync from '../utils/catchAsync.js';
 import Booking from '../models/bookingModel.js';
 

@@ -1,7 +1,8 @@
-import Tour from '../models/toursModel.js';
+import Tour from '../models/tourModel.js';
 import { AppError } from '../utils/appError.js';
 import catchAsync from '../utils/catchAsync.js';
 import User from '../models/userModel.js';
+import Booking from '../models/bookingModel.js';
 
 export const getOverview = catchAsync(async (req, res, next) => {
 	const tours = await Tour.find();
@@ -86,3 +87,15 @@ export const getResetPassword = (req, res) => {
 		title: 'Reset password',
 	});
 };
+
+export const getMyTours = catchAsync(async (req, res, next) => {
+	const bookings = await Booking.find({ user: req.user.id }).populate({ path: 'tour' });
+
+	const tourIDs = await bookings.map((el) => el.tour);
+	const tours = await Tour.find({ _id: { $in: tourIDs } });
+
+	res.status(200).render('overview', {
+		title: 'My Tours',
+		tours,
+	});
+});
