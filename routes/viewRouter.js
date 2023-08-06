@@ -15,7 +15,7 @@ import { createBookingCheckout } from '../controller/bookingController.js';
 
 const viewRouter = express.Router();
 
-// viewRouter.use(isLoggedIn);
+viewRouter.use(isLoggedIn);
 
 viewRouter.get('/', getOverview);
 viewRouter.get('/tour/:slug', getTour);
