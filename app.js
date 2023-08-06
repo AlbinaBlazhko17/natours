@@ -17,6 +17,7 @@ import bookingRouter from './routes/bookingRouter.js';
 import { AppError } from './utils/appError.js';
 import cors from 'cors';
 import compression from 'compression';
+import dotenv from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +26,7 @@ const app = express();
 
 app.enable('trust proxy');
 
-app.use(cookieParser());
+// app.use(cookieParser(process.env.JWT_SECRET));
 
 app.use(
 	cors({

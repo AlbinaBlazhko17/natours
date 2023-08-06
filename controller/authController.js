@@ -17,9 +17,8 @@ const createSendToken = (user, statusCode, req, res) => {
 
 	res.cookie('jwt', token, {
 		expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-		// httpOnly: true,
-		secure: false,
-		sameSite: 'none',
+		httpOnly: true,
+		secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
 	});
 
 	user.password = undefined;
@@ -53,7 +52,6 @@ export const logout = (req, res) => {
 	res.cookie('jwt', 'loggedout', {
 		expired: new Date(Date.now() + 10 * 1000),
 		httpOnly: true,
-		credentials: 'include',
 	});
 	res.status(200).json({ status: 'success' });
 };
@@ -77,7 +75,7 @@ export const protect = catchAsync(async (req, res, next) => {
 	let token;
 	if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
 		token = req.headers.authorization.split(' ')[1];
-	} else if (req.cookies.jwt && req.cookies.jwt !== 'loggedout') {
+	} else if (req.cookies.jwt) {
 		token = req.cookies.jwt;
 	}
 
