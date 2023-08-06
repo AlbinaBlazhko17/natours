@@ -57,7 +57,7 @@
 		"parcel": "^2.9.3"
 	},
 	"engines": {
-		"node": ">=10.0.0"
+		"node": "^10"
 	},
 	"moduleNameMapper": {
 		"axios": "axios/dist/node/axios.cjs"
