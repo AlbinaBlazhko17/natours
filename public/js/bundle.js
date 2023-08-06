@@ -43,7 +43,12 @@ const $71aa1b7eb6279560$export$596d806903d1f59e = async (email, password)=>{
                 password: password
             }
         });
-        if (res.data.status === "success") (0, $a01ad5087aa0d30d$export$de026b00723010c1)("success", "Logged in successfully!");
+        if (res.data.status === "success") {
+            (0, $a01ad5087aa0d30d$export$de026b00723010c1)("success", "Logged in successfully!");
+            window.setTimeout(()=>{
+                location.assign("/");
+            }, 1500);
+        }
     } catch (err) {
         (0, $a01ad5087aa0d30d$export$de026b00723010c1)("error", err.response.data.message);
     }
@@ -58,9 +63,9 @@ const $71aa1b7eb6279560$export$a0973bcfe11b05c9 = async ()=>{
         if (res.data.status === "success") {
             (0, $a01ad5087aa0d30d$export$de026b00723010c1)("success", "Logged out successfully!");
             location.reload(true);
-        // window.setTimeout(() => {
-        // 	location.assign('/');
-        // }, 1500);
+            window.setTimeout(()=>{
+                location.assign("/");
+            }, 1500);
         }
     } catch (err) {
         (0, $a01ad5087aa0d30d$export$de026b00723010c1)("error", err);
@@ -112,7 +117,12 @@ const $13c34e71768beb7a$export$6503ec6e8aabbaf = async (name, email, password, p
                 passwordConfirm: passwordConfirm
             }
         });
-        if (res.data.status === "success") (0, $a01ad5087aa0d30d$export$de026b00723010c1)("success", "Registered successfully!");
+        if (res.data.status === "success") {
+            (0, $a01ad5087aa0d30d$export$de026b00723010c1)("success", "Registered successfully!");
+            window.setTimeout(()=>{
+                location.assign("/me");
+            }, 1500);
+        }
     } catch (err) {
         (0, $a01ad5087aa0d30d$export$de026b00723010c1)("error", err.response.data.message);
     }
