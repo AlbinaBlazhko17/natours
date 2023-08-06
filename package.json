@@ -5,6 +5,8 @@
 	"main": "public/js/bundle.js",
 	"type": "module",
 	"source": "public/js/index.js",
+	"allowSyntheticDefaultImports": true,
+	"esModuleInterop": true,
 	"scripts": {
 		"start": "nodemon server.js",
 		"start:prod": "NODE_ENV=production nodemon server.js",
@@ -21,7 +23,9 @@
 		"bcrypt": "^5.1.0",
 		"bcryptjs": "^2.4.3",
 		"braintree": "^3.16.0",
+		"compression": "^1.7.4",
 		"cookie-parser": "^1.4.6",
+		"cors": "^2.8.5",
 		"dotenv": "^16.1.4",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-node": "^11.1.0",

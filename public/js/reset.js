@@ -4,9 +4,7 @@ export const resetPassword = async (password, passwordConfirm) => {
 	try {
 		const res = await axios({
 			method: 'PATCH',
-			url: `http://localhost:3000/api/v1/users/resetPassword/${
-				window.location.pathname.split('/')[2]
-			}`,
+			url: `/api/v1/users/resetPassword/${window.location.pathname.split('/')[2]}`,
 			data: {
 				password,
 				passwordConfirm,

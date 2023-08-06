@@ -10,7 +10,7 @@ process.on('uncaughtException', (err) => {
 import app from './app.js';
 dotenv.config();
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 const DB = process.env.DB_CONNECTION.replace('<PASSWORD>', process.env.DB_PASS);
 
@@ -18,7 +18,7 @@ mongoose.connect(DB).then(() => {
 	console.log('DB connected successful!');
 });
 
-const server = app.listen(port, () => {
+const server = app.listen(port, '127.0.0.1', () => {
 	console.log(`App running on port ${port}`);
 });
 

@@ -15,18 +15,24 @@ import userRouter from './routes/userRouter.js';
 import viewRouter from './routes/viewRouter.js';
 import bookingRouter from './routes/bookingRouter.js';
 import { AppError } from './utils/appError.js';
+import cors from 'cors';
+import compression from 'compression';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(
+	cors({
+		credentials: true,
+	})
+);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(helmet());
-app.use(cookieParser());
 
 app.use(
 	express.urlencoded({
@@ -114,6 +120,9 @@ app.use(
 		],
 	})
 );
+
+app.use(compression());
+app.use(cookieParser());
 
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);

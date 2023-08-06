@@ -43,7 +43,7 @@ export const signUp = catchAsync(async (req, res, next) => {
 		changePasswordAfter: req.body.changePasswordAfter,
 	});
 
-	const url = `${req.protocol}://localhost:${process.env.PORT}/me`;
+	const url = `${req.protocol}://${req.get('host')}/me`;
 
 	await new Email(newUser, url).sendWelcome();
 
@@ -54,6 +54,7 @@ export const logout = (req, res) => {
 	res.cookie('jwt', 'loggedout', {
 		expired: new Date(Date.now() + 10 * 1000),
 		httpOnly: true,
+		credentials: 'include',
 	});
 	res.status(200).json({ status: 'success' });
 };
@@ -113,7 +114,9 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 	const resetToken = user.createPasswordResetToken();
 	await user.save({ validateBeforeSave: false });
 
-	const resetURL = `http://localhost:${process.env.PORT}/resetPassword/${resetToken}`;
+	const resetURL = `${req.protocol}://${req.get(
+		'host'
+	)}/api/v1/users/resetPassword/${resetToken}`;
 
 	try {
 		await new Email(user, resetURL).sendPasswordReset();
@@ -121,6 +124,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
 		res.status(200).json({
 			status: 'success',
 			massage: 'Token sent to email',
+			credentials: 'include',
 		});
 	} catch (err) {
 		user.passwordResetToken = undefined;
@@ -171,11 +175,9 @@ export const isLoggedIn = async (req, res, next) => {
 	try {
 		if (req.cookies.jwt) {
 			const decoded = await promisify(jwt.verify)(req.cookies.jwt, process.env.JWT_SECRET);
-
 			const currentUser = await User.findById(decoded.id);
 			if (!currentUser) return next();
 			if (currentUser.changePasswordAfter(decoded.iat)) return next();
-
 			req.user = currentUser;
 			res.locals.user = currentUser;
 			return next();

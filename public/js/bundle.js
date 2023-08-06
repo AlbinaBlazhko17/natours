@@ -14,7 +14,7 @@ const $674e98ca3fcec722$export$66791fb2cfeec3e = async (email)=>{
     try {
         const res = await axios({
             method: "POST",
-            url: "http://localhost:3000/api/v1/users/forgotPassword",
+            url: "/api/v1/users/forgotPassword",
             data: {
                 email: email
             }
@@ -36,7 +36,8 @@ const $e33d9ff231aec008$export$596d806903d1f59e = async (email, password)=>{
     try {
         const res = await axios({
             method: "POST",
-            url: "http://localhost:3000/api/v1/users/login",
+            url: "/api/v1/users/login",
+            credentials: "include",
             data: {
                 email: email,
                 password: password
@@ -56,7 +57,8 @@ const $e33d9ff231aec008$export$a0973bcfe11b05c9 = async ()=>{
     try {
         const res = await axios({
             method: "GET",
-            url: "http://localhost:3000/api/v1/users/logout"
+            credentials: "include",
+            url: "/api/v1/users/logout"
         });
         if (res.data.status === "success") {
             (0, $1eb0cc260df27e1b$export$de026b00723010c1)("success", "Logged out successfully!");
@@ -107,7 +109,7 @@ const $063fc4c5866f54d6$export$6503ec6e8aabbaf = async (name, email, password, p
     try {
         const res = await axios({
             method: "POST",
-            url: "http://localhost:3000/api/v1/users/signup",
+            url: "/api/v1/users/signup",
             data: {
                 name: name,
                 email: email,
@@ -130,7 +132,7 @@ const $063fc4c5866f54d6$export$6503ec6e8aabbaf = async (name, email, password, p
 
 const $a7bd2b0e83ecbd10$export$f558026a994b6051 = async (data, type)=>{
     try {
-        const url = type === "password" ? "http://localhost:3000/api/v1/users/updateMyPassword" : "http://localhost:3000/api/v1/users/updateMe";
+        const url = type === "password" ? "/api/v1/users/updateMyPassword" : "/api/v1/users/updateMe";
         const res = await axios({
             method: "PATCH",
             url: url,
@@ -154,7 +156,7 @@ const $6bf190d5429d448a$export$dc726c8e334dd814 = async (password, passwordConfi
     try {
         const res = await axios({
             method: "PATCH",
-            url: `http://localhost:3000/api/v1/users/resetPassword/${window.location.pathname.split("/")[2]}`,
+            url: `/api/v1/users/resetPassword/${window.location.pathname.split("/")[2]}`,
             data: {
                 password: password,
                 passwordConfirm: passwordConfirm
@@ -176,7 +178,7 @@ const $6bf190d5429d448a$export$dc726c8e334dd814 = async (password, passwordConfi
 const $245ad133cda49593$export$8d5bdbf26681c0c2 = async (tourId)=>{
     const stripe = Stripe("pk_test_51NTK5kFEmoFjW4EKo4wWxQgIBz1ap58MlrdTsyfZGpyG30u8lcgqzM8ktBlVCffR40wp3G0lkN5R6HzYLzpT4kfh00I7A0FFTo");
     try {
-        const session = await axios(`http://localhost:3000/api/v1/bookings/checkout-session/${tourId}`);
+        const session = await axios(`/api/v1/bookings/checkout-session/${tourId}`);
         await stripe.redirectToCheckout({
             sessionId: session.data.session.id
         });
