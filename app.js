@@ -122,7 +122,7 @@ app.use(
 );
 
 app.use(compression());
-// app.use(cookieParser());
+app.use(cookieParser());
 
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
