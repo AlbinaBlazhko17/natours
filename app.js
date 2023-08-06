@@ -25,7 +25,7 @@ const app = express();
 
 app.enable('trust proxy');
 
-app.use(cookieParser());
+// app.use(cookieParser());
 
 app.use(
 	cors({
