@@ -175,7 +175,7 @@ export const isLoggedIn = async (req, res, next) => {
 			const currentUser = await User.findById(decoded.id);
 			if (!currentUser) return next();
 			if (currentUser.changePasswordAfter(decoded.iat)) return next();
-			req.user = currentUser;
+			// req.user = currentUser;
 			res.locals.user = currentUser;
 			return next();
 		}
