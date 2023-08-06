@@ -1,4 +1,4 @@
-import * as cp from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import { rateLimit } from 'express-rate-limit';
@@ -25,7 +25,7 @@ const app = express();
 
 app.enable('trust proxy');
 
-app.use(cp());
+app.use(cookieParser());
 
 app.use(
 	cors({
