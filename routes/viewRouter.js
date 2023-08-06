@@ -17,7 +17,7 @@ const viewRouter = express.Router();
 
 // viewRouter.use(isLoggedIn);
 
-viewRouter.get('/', getOverview, function (req, res) {
+viewRouter.get('/', isLoggedIn, getOverview, function (req, res) {
 	if (res.locals && res.locals.user) {
 		res.render('index', { currentUser: res.locals.user });
 	} else {
