@@ -17,10 +17,10 @@ const viewRouter = express.Router();
 
 // viewRouter.use(isLoggedIn);
 
-viewRouter.get('/', isLoggedIn, getOverview);
-viewRouter.get('/tour/:slug', isLoggedIn, getTour);
-viewRouter.get('/login', isLoggedIn, getLoginForm);
-viewRouter.get('/register', isLoggedIn, getRegisterForm);
+viewRouter.get('/', getOverview);
+viewRouter.get('/tour/:slug', getTour);
+viewRouter.get('/login', getLoginForm);
+viewRouter.get('/register', getRegisterForm);
 viewRouter.get('/forgotPassword', getForgotPassword);
 viewRouter.get('/resetPassword/:token', getResetPassword);
 viewRouter.get('/me', protect, getAccount);
