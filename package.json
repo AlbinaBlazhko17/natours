@@ -8,7 +8,8 @@
 	"allowSyntheticDefaultImports": true,
 	"esModuleInterop": true,
 	"scripts": {
-		"start": "nodemon server.js",
+		"start": "node server.js",
+		"dev": "nodemon server.js",
 		"start:prod": "NODE_ENV=production nodemon server.js",
 		"watch:js": "parcel watch",
 		"build:js": "parcel watch ./public/js/index.js --dist-dir ./public/js",
@@ -54,6 +55,9 @@
 		"eslint": "^8.42.0",
 		"eslint-plugin-react": "^7.32.2",
 		"parcel": "^2.9.3"
+	},
+	"engines": {
+		"node": ">=10.0.0"
 	},
 	"moduleNameMapper": {
 		"axios": "axios/dist/node/axios.cjs"
