@@ -17,7 +17,13 @@ const viewRouter = express.Router();
 
 // viewRouter.use(isLoggedIn);
 
-viewRouter.get('/', isLoggedIn, getOverview);
+viewRouter.get('/', getOverview, function (req, res) {
+	if (res.locals && res.locals.user) {
+		res.render('index', { currentUser: res.locals.user });
+	} else {
+		res.render('loginPage');
+	}
+});
 viewRouter.get('/tour/:slug', isLoggedIn, getTour);
 viewRouter.get('/login', isLoggedIn, getLoginForm);
 viewRouter.get('/register', isLoggedIn, getRegisterForm);
